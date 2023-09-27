@@ -1,8 +1,8 @@
-import { View, Image, Text } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { deviceHeight, deviceWidth } from './Dimensions';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { API_KEY } from './Constants';
+import { View, Image, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { deviceHeight, deviceWidth } from "./Dimensions";
+import Icon from "react-native-vector-icons/Ionicons";
+import { API_KEY } from "./Constants";
 
 export default function Details(props) {
   const [data, setData] = useState(null); // Initialize data as null
@@ -19,51 +19,53 @@ export default function Details(props) {
           throw new Error(`HTTP Error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Fetched data:', data); // Add this line to log the data
+        console.log("Fetched data:", data); // Add this line to log the data
         setData(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, [name]);
-  
-  
+
   const Data = ({ title, value }) => (
     <View
       style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
-      <Text style={{ color: 'gray', fontSize: 22 }}>{title}</Text>
-      <Text style={{ color: 'white', fontSize: 22 }}>{value}</Text>
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <Text style={{ color: "gray", fontSize: 22 }}>{title}</Text>
+      <Text style={{ color: "white", fontSize: 22 }}>{value}</Text>
     </View>
   );
 
   return (
     <View>
       <Image
-        source={require('../assets/images/images1.jpg')}
+        source={require("../assets/images/images1.jpg")}
         style={{ height: deviceHeight, width: deviceWidth }}
-        imageStyle={{ opacity: 0.6, backgroundColor: 'black' }}
+        imageStyle={{ opacity: 0.6, backgroundColor: "black" }}
       />
       <View
         style={{
-          position: 'absolute',
+          position: "absolute",
           paddingVertical: 20,
           paddingHorizontal: 10,
-        }}>
+        }}
+      >
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
             width: deviceWidth - 20,
-          }}>
+          }}
+        >
           <Icon name="menu" size={46} color="white" />
           <Image
-            source={require('../assets/images/user1.jpg')}
+            source={require("../assets/images/user1.jpg")}
             style={{ height: 46, width: 46, borderRadius: 50 }}
           />
         </View>
@@ -71,24 +73,29 @@ export default function Details(props) {
         {data ? ( // Conditionally render when 'data' is defined
           <View
             style={{
-              flexDirection: 'column',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
+              flexDirection: "column",
+              justifyContent: "space-evenly",
+              alignItems: "center",
               height: deviceHeight - 100,
-            }}>
+            }}
+          >
             <View>
-              <Text style={{ color: 'white', fontSize: 40 }}>{name}</Text>
-              <Text style={{ fontSize: 22, color: 'white', textAlign: "center" }}>
+              <Text style={{ color: "white", fontSize: 40 }}>{name}</Text>
+              <Text
+                style={{ fontSize: 22, color: "white", textAlign: "center" }}
+              >
                 {data?.weather[0].main}
               </Text>
             </View>
 
-            <Text style={{ color: 'white', fontSize: 64 }}>
+            <Text style={{ color: "white", fontSize: 64 }}>
               {(data.main.temp - 273).toFixed(2)}&deg; C
             </Text>
 
             <View>
-              <Text style={{ color: 'white', fontSize: 22, marginBottom: 16 }}>Weather Details</Text>
+              <Text style={{ color: "white", fontSize: 22, marginBottom: 16 }}>
+                Weather Details
+              </Text>
               <View style={{ width: deviceWidth - 60 }}>
                 <Data value={data?.wind.speed} title="Wind" />
                 <Data value={data?.main.pressure} title="Pressure" />
@@ -98,7 +105,16 @@ export default function Details(props) {
             </View>
           </View>
         ) : (
-          <Text style={{ color: 'white', fontSize: 22 }}>Loading...</Text> // Show a loading message when 'data' is null
+          <Text
+            style={{
+              color: "white",
+              fontSize: 22,
+              textAlign: "center",
+              marginTop: 20,
+            }}
+          >
+            No Data found{" "}
+          </Text> // Show a loading message when 'data' is null
         )}
       </View>
     </View>
